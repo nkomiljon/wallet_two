@@ -1,5 +1,5 @@
-module github.com/nkomiljon/wallet
+module github.com/nkomiljon/wallet_two
 
 go 1.15
 
-require github.com/google/uuid v1.1.2 // indirect
+require github.com/google/uuid v1.1.2

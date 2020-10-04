@@ -1,7 +1,9 @@
 package wallet
 
 import (
+	
 	"errors"
+	
 )
 
 //ErrPhoneRegistered -- phone already registred
