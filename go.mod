@@ -1,4 +1,4 @@
-module github.com/nkomiljon/wallet_two
+module github.com/nkomiljon/wallet_two/v1
 
 go 1.15
 
