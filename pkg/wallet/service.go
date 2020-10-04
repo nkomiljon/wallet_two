@@ -1,8 +1,8 @@
 package wallet
 
 import (
+	"github.com/nkomiljon/wallet_two/v1/pkg/types"
 	"github.com/google/uuid"
-	"github.com/nkomiljon/wallet_two/pkg/types"
 	"errors"
     
 )
