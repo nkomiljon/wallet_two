@@ -1,9 +1,10 @@
 package wallet
 
 import (
-	"github.com/google/uuid"
 	"github.com/nkomiljon/wallet_two/pkg/types"
 	"errors"
+
+	"github.com/google/uuid"
 	
 )
 
@@ -152,4 +153,48 @@ func (s *Service) Repeat(paymentID string) (*types.Payment, error) {
 		return nil, err
 	}
 	return paymentNew, nil
+}
+
+//FavoritePayment method
+func (s *Service) FavoritePayment(paymentID string, name string) (*types.Favorite, error) {
+
+	payment, err := s.FindPaymentByID(paymentID)
+	if err != nil {
+		return nil, err
+	}
+
+	favoriteID := uuid.New().String()
+	favorite := &types.Favorite{
+		ID:        favoriteID,
+		AccountID: payment.AccountID,
+		Name:      name,
+		Amount:    payment.Amount,
+		Category:  payment.Category,
+	}
+
+	s.favorites = append(s.favorites, favorite)
+
+	return favorite, nil
+}
+
+//PayFromFavorite method
+func (s *Service) PayFromFavorite(favoriteID string) (*types.Payment, error) {
+
+	var favorite *types.Favorite
+	for _, v := range s.favorites {
+		if v.ID == favoriteID{
+			favorite = v
+			break
+		}
+	}
+	if favorite == nil{
+		return nil, ErrFavoriteNotFound
+	}
+
+	payment, err := s.Pay(favorite.AccountID, favorite.Amount, favorite.Category)
+
+	if err != nil{
+		return nil, err
+	}
+	return payment, nil
 }
